@@ -1,0 +1,9 @@
+{
+  "name": "it-207-ai-workshop",
+  "version": "1.0.0",
+  "private": true,
+  "description": "IT 207 responsible AI-assisted programming workshop",
+  "scripts": {
+    "test": "node test.js"
+  }
+}
