@@ -1,60 +1,47 @@
 # IT 207 AI-Assisted Programming Workshop
 
-The programs in this project are a simplified version of grep.js, a simplified version of head.js, a word counting program called count-words.js, and an example of a "Fancy Command" called fancy-grep.js which is a combination of grep and head.
+## Section 1 — Command Description
 
-## Programs
+`fancy-grep.js` is my primary tool. It uses both `grep` and `head`. `fancy-grep.js` will find a specified pattern in one file, print the requested number of lines that contain the pattern, and report how many total matching lines it found.
 
-- grep.js: The function reads a single file and prints all of its lines if they contain your chosen search pattern.
-- head.js: This function will print the first ten lines by default, but you can enter the -n option followed by a nonnegative integer to get a different amount of lines.
-- count-words.js: This function counts how many words are separated by some form of whitespace.
-- fancy-grep.js: Searches one file for a specific string or pattern, then displays the total number of matches found and prints the first requested number of matching lines.
-
-## Needs & Usage
-
-You'll need to run Node.js on your machine. This project uses no outside packages.
-
-Run each of these files in the current working directory (project directory):
-
-```bash
-node grep.js ap sample.txt
-node head.js -n 2 sample.txt
-node count-words.js sample.txt
-node fancy-grep.js a 2 sample.txt
-```
-
-When you run fancy-grep.js you have to provide three things:
-
-- A pattern that you want to search for.
-- An integer greater than or equal to zero, which represents how many results you want to see at most.
-- The name of the file that you'd like to search.
-
-The command format looks like this:
+Use this exact format when running the tool:
 
 ```bash
 node fancy-grep.js <pattern> <number> <file>
 ```
 
-Running `node fancy-grep.js a 2 sample.txt` prints apple and banana. Immediately after printing those two words it displays `Total matches: 4`.
+Here is an example:
 
-## Testing
+```bash
+node fancy-grep.js a 2 sample.txt
+```
 
-Execute `npm test` in order to automate testing for this project. If all of the tests pass, `All tests passed` will be printed. The tests include:
+In this example, the output is `apple`, `banana`, and `Total matches: 4`.
 
-- grep matches
-- head line limits
-- normal and empty-file word counts
-- limiting the Fancy Command output
-- requesting more results than the number of available matches
-- a pattern with no matches
+`grep.js`, `head.js`, and `count-words.js` are also included in the repository. I used Node.js for these tools; however, there are no additional packages that need to be installed.
 
-## Edge Cases
+### Testing and edge cases
 
-- When there are no matches it will print `Total matches: 0`.
-- When you set a limit greater than the number of available matches it will still print every available match.
-- If your limit is set to 0, it will print no matching lines but still report the total number of matches.
-- If you do not enter every argument, use a negative limit, or use a nonnumeric limit, it will exit with a nonzero status and display a usage message.
-- There are zero words in an empty file.
+Running `npm test` tests all of the programs, including the following edge cases:
 
-## AI Assistance and Verification
+- A pattern with no matches reports `Total matches: 0`.
+- A limit larger than the number of matches prints every available match.
+- A limit of 0 prints no matching lines but still reports the total.
+- Missing arguments, a negative limit, or a nonnumeric limit displays a usage message and exits with a nonzero status.
+- An empty file contains zero words.
 
-AI assisted me in learning the original Linux commands, planning the Fancy Command, suggesting testing options, and identifying potential edge cases. To verify that the suggested ideas were valid, I ran the Linux commands, reviewed my Node.js code, manually checked the output from each command, and tested the programs using automated tests. The scope of the implementation was defined to use only synchronous fs API calls, process.argv, strings, arrays, loops, and regular expressions.
+## Section 2 — AI-Assisted Programming
+
+I used AI to provide explanations about the inputs and outputs from `grep` and `head`, provide at least two test-case suggestions, describe edge conditions, and help explain unexpected results. AI also provided guidance on how to use `process.argv` and `fs.readFileSync`.
+
+AI provided several test-case ideas, including a normal pattern match, no matches, an empty file, a limit of 0 in the Fancy Command, and invalid input. I was still responsible for decisions such as which commands would be combined, what the command-line arguments would look like, what information to show in the results, reviewing the program behavior, running the tests, and comparing the expected output with the actual output. The final design combines `grep` and `head` and reports the total number of matching lines.
+
+In some cases AI provided inaccurate information, omitted details, or misinterpreted the request. AI stated that `count-words.js` separated words using single spaces, altered the required Fancy Command syntax, and inaccurately stated that the Fancy Command had a default result limit. AI also initially overlooked direct tests for a limit of 0 and invalid input. I found these errors by reviewing the source code and executing the commands.
+
+## Run the complete test suite
+
+```bash
+npm test
+```
+
+A successful run prints `All tests passed.`
