@@ -1,32 +1,60 @@
 # IT 207 AI-Assisted Programming Workshop
 
-This project contains simplified versions of Linux `grep` and `head`, plus a new command-line tool, `count-words`.
+The programs in this project are a simplified version of grep.js, a simplified version of head.js, a word counting program called count-words.js, and an example of a "Fancy Command" called fancy-grep.js which is a combination of grep and head.
 
-## Run the tools
+## Programs
+
+- grep.js: The function reads a single file and prints all of its lines if they contain your chosen search pattern.
+- head.js: This function will print the first ten lines by default, but you can enter the -n option followed by a nonnegative integer to get a different amount of lines.
+- count-words.js: This function counts how many words are separated by some form of whitespace.
+- fancy-grep.js: Searches one file for a specific string or pattern, then displays the total number of matches found and prints the first requested number of matching lines.
+
+## Needs & Usage
+
+You'll need to run Node.js on your machine. This project uses no outside packages.
+
+Run each of these files in the current working directory (project directory):
 
 ```bash
 node grep.js ap sample.txt
 node head.js -n 2 sample.txt
 node count-words.js sample.txt
+node fancy-grep.js a 2 sample.txt
 ```
 
-`grep.js` prints lines containing a pattern. `head.js` prints the first 10 lines by default, or the number supplied with `-n`. `count-words.js` prints the number of whitespace-separated words in a file.
+When you run fancy-grep.js you have to provide three things:
 
-## Test
+- A pattern that you want to search for.
+- An integer greater than or equal to zero, which represents how many results you want to see at most.
+- The name of the file that you'd like to search.
+
+The command format looks like this:
 
 ```bash
-npm test
+node fancy-grep.js <pattern> <number> <file>
 ```
 
-The tests cover matching lines, limiting output, normal word counting, and an empty file.
+Running `node fancy-grep.js a 2 sample.txt` prints apple and banana. Immediately after printing those two words it displays `Total matches: 4`.
 
-## AI assistance and verification
+## Testing
 
-I used AI to explain what `grep` and `head` do, suggest test cases, and identify edge cases. I verified the explanations by running the commands in the terminal and reviewed the generated code before using it. I made the final design decisions, including choosing `count-words` as the additional tool.
+Execute `npm test` in order to automate testing for this project. If all of the tests pass, `All tests passed` will be printed. The tests include:
 
-### Edge cases considered
+- grep matches
+- head line limits
+- normal and empty-file word counts
+- limiting the Fancy Command output
+- requesting more results than the number of available matches
+- a pattern with no matches
 
-- A search pattern with no matches produces no matching output.
-- A file with fewer lines than requested still prints only the lines available.
-- An empty file contains zero words.
-- Missing command-line arguments produce a usage message and a nonzero exit code.
+## Edge Cases
+
+- When there are no matches it will print `Total matches: 0`.
+- When you set a limit greater than the number of available matches it will still print every available match.
+- If your limit is set to 0, it will print no matching lines but still report the total number of matches.
+- If you do not enter every argument, use a negative limit, or use a nonnumeric limit, it will exit with a nonzero status and display a usage message.
+- There are zero words in an empty file.
+
+## AI Assistance and Verification
+
+AI assisted me in learning the original Linux commands, planning the Fancy Command, suggesting testing options, and identifying potential edge cases. To verify that the suggested ideas were valid, I ran the Linux commands, reviewed my Node.js code, manually checked the output from each command, and tested the programs using automated tests. The scope of the implementation was defined to use only synchronous fs API calls, process.argv, strings, arrays, loops, and regular expressions.
